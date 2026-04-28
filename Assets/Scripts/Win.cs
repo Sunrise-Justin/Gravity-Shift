@@ -10,6 +10,7 @@ public class Win : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             SceneManager.LoadScene(nextSceneName);
+            Debug.Log("HIT");
         }
     }
 }
