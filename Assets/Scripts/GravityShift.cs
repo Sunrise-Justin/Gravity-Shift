@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class GravityFlip : MonoBehaviour
+public class GravityShift : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private bool isUpsideDown = false;
+    public bool canFlip = true;
     public float flipCooldown = 0.5f;
     private float lastFlipTime;
 
@@ -14,7 +14,7 @@ public class GravityFlip : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && Time.time > lastFlipTime + flipCooldown)
+        if (canFlip && Input.GetKeyDown(KeyCode.G) && Time.time > lastFlipTime + flipCooldown)
         {
             FlipGravity();
             lastFlipTime = Time.time;
@@ -23,12 +23,16 @@ public class GravityFlip : MonoBehaviour
 
     void FlipGravity()
     {
-        isUpsideDown = !isUpsideDown;
-
-        // Flip gravity
-        rb.gravityScale *= -1;
+        // Invert gravity
+        rb.gravityScale *= -1f;
 
         // Flip player visually
         transform.Rotate(0f, 0f, 180f);
+    }
+
+    // Called by PlayerMovement when landing on or leaving a NoFlip platform
+    public void SetCanFlip(bool allowed)
+    {
+        canFlip = allowed;
     }
 }
